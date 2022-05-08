@@ -13,17 +13,17 @@
                     let productos = localStorage.getItem("productos");
                     productos = !productos ? [] : JSON.parse(productos)
                     productos.push({nombre: btnPresionado});
+                    productos= [...new Set(productos)];
                     productos= JSON.stringify(productos);
                     localStorage.setItem("productos",productos);
                     console.log(productos)                   
-                   // productosFinales= [...new Set(arrayProductos)];                                
+                                              
                 });                 
                        
                  $('.btn-carrito').click(function(e){
                      e.preventDefault();
                      let productos = localStorage.getItem("productos");
-                     productos= !productos ? [] : JSON.parse(productos);
-                     productos= [...new Set(productos)];
+                     productos= !productos ? [] : JSON.parse(productos);                    
                    $('.modal-body .row').html('')                   
                    productos.forEach(producto=>{
                        $('.modal-body .row').append(`
