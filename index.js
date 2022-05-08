@@ -1,40 +1,49 @@
-const express= require('express');
+const express = require("express");
 const app = express();
-const handlebars= require('express-handlebars');
-const {productos}= require('./consultas')
+const handlebars = require("express-handlebars");
+const { productos } = require("./consultas");
 
 app.listen(3000, console.log("Servidor activo http://localhost:3000"));
 
-app.use('/bootstrap',express.static(`${__dirname}/node_modules/bootstrap/dist/`));
-app.use('/jquery',express.static(`${__dirname}/node_modules/jquery/dist/`));
+app.use(
+  "/bootstrap",
+  express.static(`${__dirname}/node_modules/bootstrap/dist/`)
+);
+app.use("/jquery", express.static(`${__dirname}/node_modules/jquery/dist/`));
+app.use("/imagenes", express.static(`${__dirname}/apoyo_desafio/`));
 
-app.set('view engine','handlebars');
+app.set("view engine", "handlebars");
 
 app.engine(
-    "handlebars",
-    handlebars.engine({
-        layoutsDir: `${__dirname}/views`,
-        partialsDir: `${__dirname}/views/partials`
-    })
-)
+  "handlebars",
+  handlebars.engine({
+    layoutsDir: `${__dirname}/views`,
+    partialsDir: `${__dirname}/views/partials`,
+  })
+);
 
 let datosProductos;
 
-const datos= ()=>{
-    return new Promise((resolve, reject)=>{
-    productos().then((respuesta)=>{
-        datosProductos= respuesta
-        console.log(datosProductos)
-        resolve(respuesta)
-    }    
-    ).catch((error)=>{
-        reject(error)
-    })
-}) }
-datos()
-    
-app.get('/', async (request, response)=>{   
-    response.render('inicio',{
-        layout: "inicio"
-    })
-})
+const datos = () => {
+  return new Promise((resolve, reject) => {
+    productos()
+      .then((respuesta) => {
+        datosProductos = respuesta;
+        console.log(datosProductos);
+        resolve(respuesta);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+datos();
+
+app.get("/", async (request, response) => {
+  response.render("inicio", {
+    layout: "inicio",    
+    nombresImgProductos: datosProductos.map((item) => {
+      return { nombre: item.nombre, imagen: item.imagen };
+    })    
+  });
+});

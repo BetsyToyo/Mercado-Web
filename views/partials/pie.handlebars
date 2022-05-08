@@ -1,6 +1,50 @@
         <script src="https://kit.fontawesome.com/c2c4e28f55.js" crossorigin="anonymous"></script>
         <script src="http://localhost:3000/jquery/jquery.min.js"></script>
         <script src="http://localhost:3000/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script>
+            $(function(){
+                let btnPresionado;                
+
+                    $('.btn-presionado').click(function(e) {
+                    e.preventDefault();
+                    btnPresionado = $(this).attr('id');                 
+                    $(`#${btnPresionado}`).css("opacity","0.5");
+
+                    let productos = localStorage.getItem("productos");
+                    productos = !productos ? [] : JSON.parse(productos)
+                    productos.push({nombre: btnPresionado});
+                    productos= JSON.stringify(productos);
+                    localStorage.setItem("productos",productos);
+                    console.log(productos)                   
+                   // productosFinales= [...new Set(arrayProductos)];                                
+                });                 
+                       
+                 $('.btn-carrito').click(function(e){
+                     e.preventDefault();
+                     let productos = localStorage.getItem("productos");
+                     productos= !productos ? [] : JSON.parse(productos);
+                     productos= [...new Set(productos)];
+                   $('.modal-body .row').html('')                   
+                   productos.forEach(producto=>{
+                       $('.modal-body .row').append(`
+                            
+                        <div class="col-4">
+                            <p>${producto.nombre}</p>
+                            <img src="http://localhost:3000/imagenes/${producto.nombre}.png" width="100%" id="imagen">
+                        </div>                                       
+                            
+                       `)
+                   });
+
+                   $('#btn-borrar').click(function(){
+                       localStorage.removeItem('productos')
+                       window.location.reload()
+                       return false
+                   })                   
+                   
+                 })
+            })
+        </script>
             
     </body>
 </html>

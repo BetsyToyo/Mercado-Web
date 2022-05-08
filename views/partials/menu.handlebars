@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <style>  
+        button{
+        border-radius:10px;
+        outline:none;
+        border: none;
+       }
+
+       #productos-linea{   
+           display: flex;
+           flex-direction: row;        
+           gap: 100px;
+           
+       }
+    </style>
     <link href="http://localhost:3000/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
     <nav class="navbar navbar-dark bg-warning">
         <div class="container-fluid text-center">
-            <p class="navbar-brand mb-0 h1">Mercado<i class="fas fa-shopping-cart"></i></p>
+            <button type="button" class="btn btn-light btn-carrito" data-bs-toggle="modal" data-bs-target="#carrito-compras">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
         </div>
     </nav>

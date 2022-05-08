@@ -1,0 +1,13 @@
+<div class="container">
+     {{# if usuario}}
+        <h3 class="text-center mt-4">Bienvenid@ al mercado Web {{usuario}}, seleccione sus productos</h3>        
+        <div class="row">
+            {{#each nombresImgProductos}}
+            {{>productos nombre= this.nombre imagen= this.imagen}}
+            {{/each}}
+        </div>
+    {{else}}
+        <p>Debe iniciar sesión</p>
+    {{/ if}}
+    
+</div>
